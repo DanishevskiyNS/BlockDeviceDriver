@@ -10,10 +10,7 @@
 #define MY_DEVICE_NAME "DanishevskiyNS_13"
 #define DBGMSG(fmt, ...) printk(MY_DEVICE_NAME": "fmt, ##__VA_ARGS__)
 
-static int deviceMajorNumb = 0;
-struct request_queue *devReqQueue = NULL;
-struct gendisk *deviceGenDisk = NULL;
-
+    static int deviceMajorNumb = 0;
 
 static int __init block_drv_init(void);
 static void __exit  block_drv_exit(void);
@@ -32,5 +29,14 @@ static struct block_device_operations block_dev_functions = {
 };
 
 #define DEVICE_BUFFER_SIZE 1024
-static char deviceBuffer [DEVICE_BUFFER_SIZE];
-static int deviceDataLength = 0;
+static struct _block_drv
+{
+    char* deviceBuffer;
+    int deviceDataLength;
+    struct request_queue *devReqQueue;
+    struct gendisk *deviceGenDisk;
+} dev;
+
+
+//static char deviceBuffer [DEVICE_BUFFER_SIZE];
+//static int deviceDataLength = 0;
