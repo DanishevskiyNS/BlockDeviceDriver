@@ -25,7 +25,6 @@ static int __init block_drv_init(void)
     dev.deviceGenDisk->first_minor = 0;
     dev.deviceGenDisk->minors = 1;
     dev.deviceGenDisk->fops = &block_dev_functions;
-    //deviceGenDisk->queue = blk_init_queue(request_fun, NULL);
     dev.deviceGenDisk->flags = GENHD_FL_NO_PART_SCAN;
 
     strcpy(dev.deviceGenDisk->disk_name, MY_DEVICE_NAME"0");
@@ -35,8 +34,8 @@ static int __init block_drv_init(void)
 
     dev.deviceBuffer = kzalloc(DEVICE_BUFFER_SIZE, GFP_KERNEL);
 
-    //memset(deviceBuffer, 0, DEVICE_BUFFER_SIZE);
     dev.deviceDataLength = 0;
+
 
     DBGMSG("block_drv_init comleted\n");
     return 0;
@@ -46,12 +45,12 @@ static void __exit block_drv_exit(void)
 {
     DBGMSG("block_drv_exit called\n");
 
+    kfree(dev.deviceBuffer);
+
     del_gendisk(dev.deviceGenDisk);
     put_disk(dev.deviceGenDisk);
 
     unregister_blkdev(deviceMajorNumb, MY_DEVICE_NAME);
-
-    kfree(dev.deviceBuffer);
 
     DBGMSG("block_drv_exit comleted\n");
 }
@@ -92,6 +91,7 @@ static int block_drv_ioctl(struct block_device* Device, fmode_t Mode, unsigned i
 
             memset(dev.deviceBuffer, 0, DEVICE_BUFFER_SIZE);
             copy_from_user(dev.deviceBuffer, data->InputData, length);
+            DBGMSG("Data from user: %s", dev.deviceBuffer);
         }
         break;
 
@@ -103,28 +103,21 @@ static int block_drv_ioctl(struct block_device* Device, fmode_t Mode, unsigned i
             outputLength = dev.deviceDataLength > data->OutputLength ? data->OutputLength : dev.deviceDataLength;
             inputLength = DEVICE_BUFFER_SIZE > data->InputLength ? data->InputLength: DEVICE_BUFFER_SIZE;
 
-            char tmpBuffer [DEVICE_BUFFER_SIZE];
-            
-            memset(tmpBuffer, 0, DEVICE_BUFFER_SIZE);
-            copy_to_user(tmpBuffer,dev.deviceBuffer, inputLength);
+            copy_to_user(data->OutputData,dev.deviceBuffer, inputLength);
 
             memset(dev.deviceBuffer, 0, DEVICE_BUFFER_SIZE);
             copy_from_user(dev.deviceBuffer, data->InputData, inputLength);
-
-
-            memset(dev.deviceBuffer, 0, data->InputLength);
-            copy_to_user(data->OutputData, tmpBuffer, outputLength);
-
-            memset(tmpBuffer, 0, 0);
+            
+            DBGMSG("Data from user: %s", dev.deviceBuffer);
 
             dev.deviceDataLength = inputLength;
         }
         break;
 
         case IOCTL_BLOCK_DBG_MESSAGE:
-        DBGMSG("IOCTL_BLOCK_DRV_GET_AND_SET\n");
+        DBGMSG("IOCTL_BLOCK_DBG_MESSAGE\n");
         {
-            printk("%s", dev.deviceBuffer);
+            DBGMSG("%s\n", dev.deviceBuffer);
         }
         break;
     }

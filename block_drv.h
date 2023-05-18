@@ -7,7 +7,7 @@
 #include <linux/blkdev.h>
 #include "block_drv_ioctl.h"
 
-#define MY_DEVICE_NAME "DanishevskiyNS_13"
+#define MY_DEVICE_NAME "DanishevskiyNS"
 #define DBGMSG(fmt, ...) printk(MY_DEVICE_NAME": "fmt, ##__VA_ARGS__)
 
     static int deviceMajorNumb = 0;
