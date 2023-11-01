@@ -12,7 +12,7 @@
 Для оценки качества используются следующие метрики:
 * [PSNR](https://ru.wikipedia.org/wiki/Пиковое_отношение_сигнала_к_шуму) - Пиковое отношение сигнала к шуму;
 * [SSIM](https://ru.wikipedia.org/wiki/SSIM) - Индекс структурного сходства;
-* [LPIPS](https://github.com/richzhang/PerceptualSimilarity#c-about-the-metric) - Learned Perceptual Image Patch Similarity.    
+* [LPIPS](https://github.com/richzhang/PerceptualSimilarity#c-about-the-metric) - Learned Perceptual Image Patch Similarity.  
 Пример расчёт метрик представлен в файле evaluation.py.
 
 ## Результаты
