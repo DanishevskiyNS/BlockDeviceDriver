@@ -5,15 +5,14 @@
 * Ограничений по использованию библиотек и сторонних функций нет
 
 ## Датасет
-Тренировочный датасет включает 745 картинок  
+Тренировочный датасет включает 745 картинок. Пример загрузки датасета в PyTorch приведён в файле dataset.py
 [Ссылка на датасет](https://drive.google.com/file/d/1ThoPb1flnfXDpRIytgBd7_e9Kv_lPnbo/view) 
-Пример загрузки датасета в PyTorch приведён в файле dataset.py
 
 ## Метрики
 Для оценки качества используются следующие метрики:
 * [PSNR](https://ru.wikipedia.org/wiki/Пиковое_отношение_сигнала_к_шуму) - Пиковое отношение сигнала к шуму;
 * [SSIM](https://ru.wikipedia.org/wiki/SSIM) - Индекс структурного сходства;
-* [LPIPS](https://github.com/richzhang/PerceptualSimilarity#c-about-the-metric) - Learned Perceptual Image Patch Similarity
+* [LPIPS](https://github.com/richzhang/PerceptualSimilarity#c-about-the-metric) - Learned Perceptual Image Patch Similarity.
 Пример расчёт метрик представлен в файле evaluation.py.
 
 ## Результаты
